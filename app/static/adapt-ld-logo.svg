@@ -1,0 +1,12 @@
+
+<svg width="420" height="120" viewBox="0 0 420 120" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(10,20)">
+    <path d="M40 10 C15 10, 10 40, 25 55 C10 70, 20 95, 45 90 C65 105, 95 90, 85 65 C100 45, 80 15, 55 20"
+          fill="none" stroke="#1E3A8A" stroke-width="4"/>
+    <path d="M30 70 Q50 50 70 65" fill="none" stroke="#0D9488" stroke-width="3"/>
+    <circle cx="30" cy="70" r="4" fill="#F59E0B"/>
+    <circle cx="50" cy="55" r="4" fill="#F59E0B"/>
+    <circle cx="70" cy="65" r="4" fill="#F59E0B"/>
+  </g>
+  <text x="130" y="70" font-family="Arial" font-size="42" font-weight="700" fill="#1E3A8A">ADAPT-LD</text>
+</svg>

@@ -1,0 +1,44 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <div class="inline-block bg-blue-100 p-4 rounded-full mb-6">
+        <i class="fas fa-microphone text-blue-600 text-3xl"></i>
+      </div>
+      <h2 class="text-3xl font-bold text-slate-900 mb-2">Reading Assessment</h2>
+      <p class="text-slate-600">Read the word aloud to assess your fluency</p>
+    </div>
+
+    <!-- Word Display -->
+    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 md:p-12 mb-8 text-center">
+      <p class="text-slate-600 text-sm font-medium mb-3">Read this word:</p>
+      <h1 id="word" class="text-6xl md:text-7xl font-bold text-blue-600 transition-all duration-300">Loading...</h1>
+    </div>
+
+    <!-- Status Display -->
+    <div class="mb-8">
+      <p id="status" class="text-center text-slate-700 font-medium h-6"></p>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="space-y-3 md:space-y-0 md:flex md:gap-4 md:justify-center">
+      <button onclick="startRecording()" class="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+        <i class="fas fa-play-circle"></i>
+        Start Reading
+      </button>
+      <button onclick="stopRecording()" class="w-full md:w-auto px-8 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2">
+        <i class="fas fa-stop-circle"></i>
+        Stop
+      </button>
+    </div>
+
+    <!-- Help Text -->
+    <p class="text-center text-slate-500 text-sm mt-8">Click "Start Reading" and read the word aloud clearly into your microphone</p>
+  </div>
+</div>
+
+<script src="/static/js/test.js"></script>
+{% endblock %}

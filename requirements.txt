@@ -1,0 +1,14 @@
+
+fastapi
+uvicorn
+jinja2
+python-multipart
+reportlab
+Optional (recommended for real speech scoring):
+openai-whisper (requires torch and ffmpeg available on PATH)
+torch
+python-jose[cryptography]
+passlib[bcrypt]
+
+Email: demo@school.test
+Password: demo-pass

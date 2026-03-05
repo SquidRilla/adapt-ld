@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ADAPT-LD - Adaptive Learning Diagnostics System">
+  <title>ADAPT-LD | Adaptive Learning Diagnostics</title>
+  <link rel="icon" type="image/x-icon" href="/static/adapt-ld-logo.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/theme.css">
+  <style>
+    * {
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+  </style>
+</head>
+<body class="bg-slate-50">
+  <!-- Navigation Header -->
+  <nav class="sticky top-0 z-50 bg-white border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3">
+          <img src="/static/adapt-ld-logo.svg" alt="ADAPT-LD Logo" class="h-10 w-10">
+          <span class="text-xl font-bold text-slate-900">ADAPT-LD</span>
+        </div>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-slate-600 hover:text-slate-900 font-medium transition">Home</a>
+          <a href="/dashboard" class="text-slate-600 hover:text-slate-900 font-medium transition">Dashboard</a>
+          <a href="/test" class="text-slate-600 hover:text-slate-900 font-medium transition">Assessment</a>
+
+          <!-- Desktop Menu -->
+        {% if user %}
+          <!-- show user name and dropdown when logged in -->
+          <div class="relative" x-data="{open:false}">
+            <button @click="open = !open"
+                    class="flex items-center gap-2 bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+              <i class="fa fa-user-circle"></i>
+              {{ user.full_name or user.email }}
+            </button>
+            <div x-show="open" @click.outside="open=false"
+                 class="absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-lg py-2 z-20">
+              <a href="/logout" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-100">
+                Logout
+              </a>
+            </div>
+          </div>
+        {% else %}
+          <div id="open-login"  class="relative">
+            <button @click="roleMenu=!roleMenu"
+                    class="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+              Login
+            </button>
+          </div>
+        {% endif %}
+        </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="min-h-[calc(100vh-64px)]">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-100 border-t border-slate-200 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <p class="text-center text-slate-600 text-sm">&copy; 2026 ADAPT-LD. Adaptive Learning Diagnostics System.</p>
+    </div>
+  </footer>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/js/home.js"></script>
+  <!-- Alpine.js for simple reactivity (dropdowns, mobile menu) -->
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  {% block scripts %}{% endblock %}
+
+</body>
+</html>
