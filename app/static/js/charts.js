@@ -1,5 +1,5 @@
 // Centralized Chart helpers for ADAPT-LD
-document.addEventListener("DOMContentLoaded", function(){
+(function () {
 
   const canvas1 = document.getElementById('num-correct-chart');
   if (!canvas1) return;
