@@ -1,7 +1,7 @@
 
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/adapt-ld/assessment")
+router = APIRouter(prefix="/adapt-ld/reading")
 
 ITEMS = [
     {"text": "cat", "difficulty": -2},

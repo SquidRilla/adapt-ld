@@ -31,6 +31,10 @@ def home(request: Request):
 def test(request: Request, user=Depends(get_current_user)):
     return templates.TemplateResponse("test.html", {"request": request, "user": user})
 
+@router.get("/adapt-ld/reading")
+def reading_page(request: Request):
+    return templates.TemplateResponse("reading.html", {"request": request})
+
 
 @router.get("/attention", response_class=HTMLResponse)
 def attention(request: Request, user=Depends(get_current_user)):
