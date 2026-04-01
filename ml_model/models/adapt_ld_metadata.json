@@ -1,0 +1,25 @@
+{
+  "features": [
+    "reading_accuracy",
+    "writing_coherence",
+    "math_accuracy",
+    "speech_fluency",
+    "attention_response_ms",
+    "age",
+    "repeated_errors",
+    "assessment_duration_s",
+    "academic_composite",
+    "processing_speed",
+    "error_rate_norm"
+  ],
+  "label_map": {
+    "0": "No Risk",
+    "1": "Mild Risk",
+    "2": "Moderate Risk",
+    "3": "High Risk"
+  },
+  "best_params": {
+    "n_estimators": 200,
+    "max_depth": 10
+  }
+}

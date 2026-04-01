@@ -123,6 +123,12 @@ questionCount++
 loadQuestion()
 
 }
+
+function onSkip(){
+  // Skip without changing ability score
+  questionCount++
+  loadQuestion()
+}
 function init(){
   // build difficulty pools
   easyPool = BANK.filter(b => b.difficulty === 'easy').slice();
@@ -161,17 +167,25 @@ sendResults()
 
 function sendResults(){
 
-fetch("/api/grammar_results",{
+fetch("/adapt-ld/grammar/score",{
 method:"POST",
 headers:{"Content-Type":"application/json"},
 body:JSON.stringify({
-score:ability,
-questions:maxQuestions
+score: ability,
+total_questions: maxQuestions,
+correct_answers: Math.max(0, Math.round((ability + maxQuestions) / 2)),
+response_time: 0
 })
 })
 
 }
 
 loadQuestion()
+
+// Attach skip button listener
+const skipBtn = document.getElementById('q-skip');
+if (skipBtn) {
+  skipBtn.addEventListener('click', onSkip);
+}
 
 })()

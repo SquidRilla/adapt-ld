@@ -26,9 +26,9 @@
     </div>
 
     <!-- Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-      <!-- Card -->
+      <!-- Card
       <a href="/reading" class="group">
         <div class="backdrop-blur-lg bg-indigo-900/100 border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-blue-500/30 transition duration-300 transform hover:-translate-y-2 hover:scale-105">
           
@@ -40,16 +40,12 @@
           <p class="text-gray-300 text-sm mt-2">Comprehension & fluency analysis</p>
 
         </div>
-      </a>
+      </a> -->
 
       <!-- Grammar -->
-      <a href="/grammar" class="group">
+      <a href="/grammar" class="group" id="grammar-card">
         <div class="backdrop-blur-lg bg-indigo-900/100 border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-indigo-500/30 transition duration-300 transform hover:-translate-y-2 hover:scale-105">
           
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-xs bg-red-100/20 text-red-900 px-2 py-1 rounded-full">Not Started</span>
-          </div>
-
           <h2 class="text-xl font-bold group-hover:text-purple-700">Grammar</h2>
           <p class="text-gray-300 text-sm mt-2">Sentence structure & rules</p>
 
@@ -57,12 +53,8 @@
       </a>
 
       <!-- Attention -->
-      <a href="/attention" class="group">
+      <a href="/attention" class="group" id="attention-card">
         <div class="backdrop-blur-lg bg-indigo-900/100 border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-amber-500/30 transition duration-300 transform hover:-translate-y-2 hover:scale-105">
-          
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full">In Progress</span>
-          </div>
 
           <h2 class="text-xl font-bold group-hover:text-amber-400">Attention</h2>
           <p class="text-gray-300 text-sm mt-2">Focus & response timing</p>
@@ -71,12 +63,8 @@
       </a>
 
       <!-- Math -->
-      <a href="/math" class="group">
+      <a href="/math" class="group" id="math-card">
         <div class="backdrop-blur-lg bg-indigo-900/100 border border-white/20 rounded-2xl p-6 shadow-lg hover:shadow-emerald-500/30 transition duration-300 transform hover:-translate-y-2 hover:scale-105">
-          
-          <div class="flex justify-between items-center mb-4">
-            <span class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full">Completed</span>
-          </div>
 
           <h2 class="text-xl font-bold group-hover:text-emerald-400">Math</h2>
           <p class="text-gray-300 text-sm mt-2">Numeracy & problem solving</p>
@@ -115,4 +103,7 @@
 
 </div>
 
+{% endblock %}
+{% block scripts %}
+<script src="/static/js/test.js"></script>
 {% endblock %}

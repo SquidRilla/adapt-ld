@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Request
 from pydantic import BaseModel
 from typing import Dict, Optional
 from collections import defaultdict
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.services.adapt_ld_report_generator import generate_adapt_ld_report
+from app.services.auth_service import get_current_user_optional
+from app.services.ml_bridge import get_student_ld_prediction
 from app.core.database import Test, Response, AttentionResult, Question, get_db
 
 router = APIRouter()
@@ -57,7 +59,7 @@ def create_report(payload: ReportCreate):
     filename = generate_adapt_ld_report(payload.student_id, payload.metrics or {}, payload.prediction or "", images=payload.images)
     return {"filename": filename}
 
-@router.get("/")
+@router.get("/report")
 async def report(db: AsyncSession = Depends(get_db)):
     # Query all responses
     responses_result = await db.execute(select(Response))
@@ -118,6 +120,31 @@ async def report(db: AsyncSession = Depends(get_db)):
         "insights": insights
     }
 
-@router.get("/report")
-async def api_report(db: AsyncSession = Depends(get_db)):
-    return await report(db)
+@router.get("/test-scores")
+async def get_test_scores(request: Request, db: AsyncSession = Depends(get_db)):
+    """Fetch test scores grouped by type for current user (if authenticated)."""
+    user = await get_current_user_optional(request, db)
+    
+    if not user:
+        # Return empty if not logged in
+        return {}
+    
+    # Query all tests for this user
+    tests_result = await db.execute(
+        select(Test)
+        .where(Test.user_id == user.id)
+        .order_by(Test.created_at.desc())
+    )
+    tests = tests_result.scalars().all()
+    
+    # Group by test_type and get the latest score for each
+    test_scores = {}
+    for test in tests:
+        if test.test_type not in test_scores:
+            test_scores[test.test_type] = {
+                "score": float(test.score),
+                "date": test.created_at.isoformat() if test.created_at else None,
+                "test_id": test.id
+            }
+    
+    return test_scores

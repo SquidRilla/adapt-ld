@@ -7,7 +7,7 @@ from app.services.numeracy_service import score_numeracy
 from app.services.auth_service import get_current_user
 from app.core.database import Test, Response, get_db
 
-router = APIRouter(prefix="/adapt-ld/math", tags=["Math"])
+router = APIRouter(tags=["Math"])
 
 class NumeracySubmission(BaseModel):
     answers: List[Optional[float]]

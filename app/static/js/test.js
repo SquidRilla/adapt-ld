@@ -1,9 +1,62 @@
 
+// Load previous test scores and display on cards
+async function loadTestScores() {
+  try {
+    const res = await fetch('/adapt-ld/reports/test-scores');
+    if (!res.ok) {
+      console.warn('Could not load test scores:', res.status);
+      return;
+    }
+    
+    const testScores = await res.json();
+    console.log('Test scores loaded:', testScores);
+    
+    // Map test types to card IDs and display names
+    const testTypeMap = {
+      'grammar': 'grammar-card',
+      'attention': 'attention-card',
+      'numeracy': 'math-card',
+      'reading': 'reading-card'
+    };
+    
+    // Update each card if scores exist
+    for (const [testType, cardId] of Object.entries(testTypeMap)) {
+      if (testScores[testType]) {
+        const score = testScores[testType];
+        const card = document.getElementById(cardId);
+        if (card) {
+          // Update status badge
+          const badge = card.querySelector('.status-badge');
+          if (badge) {
+            const scoreValue = Math.round(score.score);
+            badge.textContent = `Score: ${scoreValue}%`;
+            
+            // Color code the badge
+            if (scoreValue >= 70) {
+              badge.className = 'status-badge text-xs bg-green-100/20 text-green-400 px-2 py-1 rounded-full';
+            } else if (scoreValue >= 50) {
+              badge.className = 'status-badge text-xs bg-yellow-100/20 text-yellow-400 px-2 py-1 rounded-full';
+            } else {
+              badge.className = 'status-badge text-xs bg-red-100/20 text-red-400 px-2 py-1 rounded-full';
+            }
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error loading test scores:', err);
+  }
+}
+
+// Load scores when page loads
+document.addEventListener('DOMContentLoaded', loadTestScores);
+
 let mediaRecorder;
 let audioChunks = [];
 let theta = 0;
 let usedItems = [];
 let testCount = 0;
+let currentItem = null;
 const MAX_ITEMS = 3; // Number of items to assess before scoring
 
 async function startTest() {
@@ -23,8 +76,12 @@ async function loadNextItem() {
   });
   currentItem = await res.json();
   usedItems.push(currentItem.text);
-  document.getElementById("word").textContent = currentItem.text;
-  document.getElementById("status").textContent = `Item ${testCount + 1} of ${MAX_ITEMS}`;
+  
+  // Only update DOM if elements exist (not all pages have these)
+  const wordEl = document.getElementById("word");
+  const statusEl = document.getElementById("status");
+  if (wordEl) wordEl.textContent = currentItem.text;
+  if (statusEl) statusEl.textContent = `Item ${testCount + 1} of ${MAX_ITEMS}`;
 }
 
 async function startRecording() {
@@ -33,7 +90,8 @@ async function startRecording() {
   mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
   mediaRecorder.onstop = sendAudio;
   mediaRecorder.start();
-  document.getElementById("status").textContent = "Listening...";
+  const statusEl = document.getElementById("status");
+  if (statusEl) statusEl.textContent = "Listening...";
 }
 
 function stopRecording() { mediaRecorder.stop(); }
@@ -64,7 +122,8 @@ async function sendAudio() {
   
   // Continue with more items or finish
   if (testCount < MAX_ITEMS) {
-    document.getElementById("status").textContent = "Loading next word...";
+    const statusEl = document.getElementById("status");
+    if (statusEl) statusEl.textContent = "Loading next word...";
     setTimeout(loadNextItem, 1000);
   } else {
     // All items complete, go to result
