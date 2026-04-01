@@ -7,7 +7,7 @@ let testCount = 0;
 const MAX_ITEMS = 3; // Number of items to assess before scoring
 
 async function startTest() {
-  const res = await fetch("/adapt-ld/assessment/start", { method: "POST" });
+  const res = await fetch("/adapt-ld/reading/start", { method: "POST" });
   const data = await res.json();
   theta = data.theta;
   usedItems = [];
@@ -16,7 +16,7 @@ async function startTest() {
 }
 
 async function loadNextItem() {
-  const res = await fetch("/adapt-ld/assessment/next-item", {
+  const res = await fetch("/adapt-ld/reading/next-item", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ theta, used_items: usedItems })
@@ -50,7 +50,7 @@ async function sendAudio() {
   const data = await res.json();
   
   // Update theta based on response
-  const updateRes = await fetch("/adapt-ld/assessment/submit-response", {
+  const updateRes = await fetch("/adapt-ld/reading/submit-response", {
     method: "POST",
     headers: {"Content-Type":"application/json"},
     body: JSON.stringify({ 

@@ -205,14 +205,67 @@ function showResults(data){
   document.getElementById('attention-result').classList.remove('hidden');
 
   // Charts
-  try{
+window.renderBarChart = function(canvasId, labels, data, colors, options = {}) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: options.label || 'Data',
+        data: data,
+        backgroundColor: colors
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: options.suggestedMax || undefined
+        }
+      }
+    }
+  });
+};
+
+window.renderHistogram = function(canvasId, labels, data, color, options = {}) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: options.label || 'Frequency',
+        data: data,
+        backgroundColor: color
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: options.suggestedMax || undefined
+        }
+      }
+    }
+  });
+};
+
+
+try{
     const attMaxCount = Math.max(hitCount, missCount, falseAlarms, 1);
     const attSuggestedMax = Math.max(TRIALS, Math.ceil(attMaxCount * 1.2));
     window.renderBarChart('att-counts-chart', ['Hits','Misses','False Alarms'], [hitCount, missCount, falseAlarms], ['#10B981','#F59E0B','#EF4444'], { label: 'Count', suggestedMax: attSuggestedMax });
 
     const rts = reactionTimes.slice();
     const bins = [0,0.25,0.5,0.75,1,1.5,2,3];
-    const labels = bins.slice(0,-1).map((b,i)=>`${bins[i]}-${bins[i+1]}s`);
+    const labels = bins.slice(0,-1).map((_b,i)=>`${bins[i]}-${bins[i+1]}s`);
     const counts = labels.map(()=>0);
     rts.forEach(rt=>{ for(let i=0;i<bins.length-1;i++){ if(rt>=bins[i] && rt<bins[i+1]){ counts[i]+=1; break; } }});
     const attRtMax = counts.length ? Math.max(...counts) : 1;

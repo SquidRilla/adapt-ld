@@ -1,137 +1,245 @@
 {% extends "base.html" %}
 {% block content %}
 
- <!-- Mobile Button -->
-    <button @click="mobile=!mobile" class="md:hidden text-2xl">
-      ☰
-    </button>
+<!-- HERO -->
 
-  </div>
+<section class="bg-blue-300 relative h-screen flex items-center justify-center overflow-hidden">
 
-  <!-- Mobile Menu -->
-  <div x-show="mobile" class="md:hidden px-6 pb-4 space-y-4">
-    <a href="#how" class="block">How It Works</a>
-    <a href="#dashboard" class="block">Dashboard</a>
-    {% if user %}
-      <a href="/logout" class="block">Logout</a>
-    {% else %}
-      <a href="#" id="open-login-mobile" class="block">Login</a>
-    {% endif %}
-  </div>
-</nav>
+<!-- animated background -->
 
+<canvas id="aiCanvas" class="absolute inset-0"></canvas>
 
-<!-- HERO (Animated) -->
-<section class="py-24 bg-gradient-to-r from-indigo-600 via-blue-600 to-teal-500 text-white text-center relative overflow-hidden">
+<div class="relative z-10 text-center max-w-4xl px-6">
 
-  <!-- Floating Animated Shapes -->
-  <div class="absolute w-72 h-72 bg-white/10 rounded-full -top-20 -left-20 animate-pulse"></div>
-  <div class="absolute w-60 h-60 bg-white/10 rounded-full bottom-0 right-0 animate-bounce"></div>
+<h1 class="text-6xl font-extrabold text-white mb-6 leading-tight">
+ADAPT-LD
+</h1>
 
-  <div class="max-w-5xl mx-auto px-6 relative z-10">
-    <h2 class="text-4xl md:text-5xl font-bold mb-6 animate-fade-in">
-      Intelligent Screening for <br class="hidden md:block">
-      Education & Healthcare
-    </h2>
+<p class="text-xl text-gray-200 mb-8">
+A Learning Diagnostics Platform
+for Early Detection of Learning Difficulties
+</p>
 
-    <p class="text-lg md:text-xl mb-10 opacity-95">
-      Adaptive AI-powered assessments helping schools and hospitals 
-      detect learning difficulties early.
-    </p>
+<div class="space-x-4">
 
-    <div class="flex justify-center gap-4 flex-wrap">
-      <a href="/register-school"
-         class="bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold hover:bg-slate-100">
-        For Schools
-      </a>
+<a href="/test"
+class="bg-indigo-600 px-8 py-4 rounded-xl text-white font-semibold hover:scale-105 transition">
+Start Screening
+</a>
 
-      <a href="/register-healthcare"
-         class="bg-slate-900 px-6 py-3 rounded-xl font-semibold hover:bg-slate-800">
-        For Healthcare
-      </a>
-    </div>
-  </div>
+<a href="/dashboard"
+class="bg-white/80 backdrop-blur-md px-8 py-4 rounded-xl text-black hover:bg-white/30 transition">
+View Dashboard
+</a>
+
+</div>
+
+</div>
+
 </section>
 
 
-<!-- HOW IT WORKS -->
-<section id="how" class="py-20">
-  <div class="max-w-6xl mx-auto px-6 text-center">
-    <h3 class="text-3xl font-bold mb-12">How ADAPT-LD Works</h3>
+<!-- FEATURES -->
 
-    <div class="grid md:grid-cols-3 gap-10">
-      <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow">
-        <h4 class="font-semibold text-indigo-600 mb-4">Adaptive Engine</h4>
-        <p>Questions adjust difficulty in real time.</p>
-      </div>
+<section class="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
 
-      <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow">
-        <h4 class="font-semibold text-indigo-600 mb-4">AI Analysis</h4>
-        <p>Speech, reading, and numeracy scoring models.</p>
-      </div>
+<div class="max-w-7xl mx-auto px-6">
 
-      <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow">
-        <h4 class="font-semibold text-indigo-600 mb-4">Insight Reports</h4>
-        <p>Clear dashboards for educators and clinicians.</p>
-      </div>
-    </div>
-  </div>
+<h2 class="text-4xl font-bold text-center mb-16">
+Diagnostic Modules
+</h2>
+
+<div class="grid md:grid-cols-3 gap-10">
+
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">Reading Analysis</h3>
+<p>Detect dyslexia through reading speed, accuracy and speech analysis.</p>
+</div>
+
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">Writing Diagnostics</h3>
+<p>Analyze grammar patterns and writing structure for dysgraphia indicators.</p>
+</div>
+
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">Mathematics Screening</h3>
+<p>Adaptive numeracy tests detect dyscalculia learning patterns.</p>
+</div>
+
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">Speech Evaluation</h3>
+<p>Speech recognition analyzes pronunciation and fluency.</p>
+</div>
+
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">Attention Assessment</h3>
+<p>Reaction and focus analysis identifies ADHD indicators.</p>
+</div>
+
+<div class="bg-white/10 backdrop-blur-lg p-8 rounded-2xl hover:scale-105 transition">
+<h3 class="text-xl font-bold mb-3">Reports</h3>
+<p>Generate detailed learning diagnostic reports instantly.</p>
+</div>
+
+</div>
+
+</div>
+
 </section>
 
 
-<!-- DASHBOARD PREVIEW -->
-<section id="dashboard" class="py-20 bg-slate-100 dark:bg-slate-800">
-  <div class="max-w-6xl mx-auto px-6 text-center">
+<!-- WORKFLOW -->
 
-    <h3 class="text-3xl font-bold mb-12">Live Dashboard Preview</h3>
+<section class="py-24 bg-gray-50">
 
-    <div class="bg-white dark:bg-slate-900 p-6 rounded-2xl shadow-xl">
+<div class="max-w-6xl mx-auto text-center px-6">
 
-      <!-- Mock Chart -->
-      <canvas id="previewChart" height="120"></canvas>
+<h2 class="text-4xl font-bold mb-16">
+How ADAPT-LD Works
+</h2>
 
-      <div class="grid md:grid-cols-3 gap-6 mt-8 text-left">
-        <div class="p-4 bg-slate-50 dark:bg-slate-700 rounded-xl">
-          <p class="text-sm">Students Screened</p>
-          <p class="text-2xl font-bold text-indigo-600">1,284</p>
-        </div>
-        <div class="p-4 bg-slate-50 dark:bg-slate-700 rounded-xl">
-          <p class="text-sm">Early Flags</p>
-          <p class="text-2xl font-bold text-teal-500">312</p>
-        </div>
-        <div class="p-4 bg-slate-50 dark:bg-slate-700 rounded-xl">
-          <p class="text-sm">Completed Assessments</p>
-          <p class="text-2xl font-bold text-blue-600">948</p>
-        </div>
-      </div>
+<div class="grid md:grid-cols-5 gap-6">
 
-    </div>
-  </div>
+<div class="bg-white p-6 rounded-xl shadow-lg">Student Test</div>
+<div class="bg-white p-6 rounded-xl shadow-lg">Data Capture</div>
+<div class="bg-white p-6 rounded-xl shadow-lg">Analysis</div>
+<div class="bg-white p-6 rounded-xl shadow-lg">Risk Detection</div>
+<div class="bg-white p-6 rounded-xl shadow-lg">Diagnostic Report</div>
+
+</div>
+
+</div>
+
 </section>
 
 
-<!-- SCRIPTS -->
-<script src="/static/js/home.js"></script>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/alpinejs" defer></script>
+<!-- ANALYTICS -->
+    <style>.chart-container {
+      position: relative;
+      height: 300px;   /* or 250px / 400px */
+      width: 100%;
+      }
+    </style>
+<section class="py-24 bg-gray-900 text-white">
+
+<div class="max-w-6xl mx-auto px-6">
+
+<h2 class="text-4xl font-bold text-center mb-16">
+System Analytics
+</h2>
+
+<div class="grid md:grid-cols-2 gap-10">
+
+<div class="chart-container">
+  <canvas id="chart1"></canvas>
+</div>
+<div class="chart-container">
+  <canvas id="chart2"></canvas>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CTA -->
+
+<section class="py-24 bg-indigo-700 text-center text-white">
+
+<h2 class="text-4xl font-bold mb-6">
+Start Early Learning Diagnostics Today
+</h2>
+
+<a href="/test"
+class="bg-white text-indigo-700 px-10 py-4 rounded-xl font-semibold hover:scale-105 transition">
+Launch Screening
+</a>
+
+</section>
+
+
+
+<!-- JS LIBRARIES -->
+
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+
+
 <script>
-const ctx = document.getElementById('previewChart');
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Reading', 'Numeracy', 'Speech'],
-        datasets: [{
-            label: 'Average Risk Score',
-            data: [65, 48, 72],
-            backgroundColor: ['#6366f1','#14b8a6','#3b82f6']
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: { legend: { display:false } }
-    }
+document.addEventListener('DOMContentLoaded', function() {
+
+/* AI Animated Background */
+
+const canvas = document.getElementById("aiCanvas")
+if (canvas) {
+  const ctx = canvas.getContext("2d")
+
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+
+  let particles = []
+
+  for(let i=0;i<120;i++){
+
+  particles.push({
+  x:Math.random()*canvas.width,
+  y:Math.random()*canvas.height,
+  vx:(Math.random()-0.5)*1,
+  vy:(Math.random()-0.5)*1
+  })
+
+  }
+
+  function animate(){
+
+  ctx.clearRect(0,0,canvas.width,canvas.height)
+
+  particles.forEach(p=>{
+
+  p.x+=p.vx
+  p.y+=p.vy
+
+  ctx.beginPath()
+  ctx.arc(p.x,p.y,2,0,Math.PI*2)
+  ctx.fillStyle="white"
+  ctx.fill()
+
+  })
+
+  requestAnimationFrame(animate)
+
+  }
+
+  animate()
+}
+
+/* Charts */
+
+if (document.getElementById("chart1")) {
+  new Chart(document.getElementById("chart1"),{
+  type:'bar',
+  data:{
+  labels:['Reading','Writing','Math','Attention'],
+  datasets:[{
+  label:'Tests Completed',
+  data:[120,80,95,60]
+  }]
+  }
+  })
+}
+
+if (document.getElementById("chart2")) {
+  new Chart(document.getElementById("chart2"),{
+  type:'doughnut',
+  data:{
+  labels:['Normal','Dyslexia Risk','ADHD Indicators'],
+  datasets:[{
+  data:[70,20,10]
+  }]
+  }
+  })
+}
+
 });
 </script>
 

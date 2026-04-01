@@ -1,18 +1,5 @@
 
 def classify_ld(features: dict):
-    """Rule-based classifier combining speech, attention and numeracy features.
-
-    Accepts a features dict with keys (optional):
-      - pronunciation_accuracy (0..1)
-      - reading_wpm (float)
-      - phonological_errors (int)
-      - confidence (0..1)
-      - attention_score (0..1)
-      - numeracy_score (0..100)
-
-    Produces a conservative binary decision string to keep compatibility with
-    existing callers.
-    """
     # Speech-based checks (primary)
     speech_risk = 0
     if features.get("pronunciation_accuracy", 1) < 0.78:

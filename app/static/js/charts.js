@@ -4,7 +4,6 @@
   const canvas1 = document.getElementById('num-correct-chart');
   if (!canvas1) return;
 
-
   window._charts = window._charts || {};
 
   function destroyChart(id){
@@ -88,8 +87,60 @@
     return window._charts[canvasId];
   }
 
-  window.renderBarChart = renderBarChart;
-  window.renderHistogram = renderHistogram;
-  window.renderLineChart = renderLineChart;
+  window.renderBarChart = function(canvasId, labels, data, colors, options = {}) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: options.label || 'Data',
+        data: data,
+        backgroundColor: colors
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: options.suggestedMax || undefined
+        }
+      }
+    }
+  });
+};
+
+window.renderHistogram = function(canvasId, labels, data, color, options = {}) {
+  const ctx = document.getElementById(canvasId);
+  if (!ctx) return;
+
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: options.label || 'Frequency',
+        data: data,
+        backgroundColor: color
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          suggestedMax: options.suggestedMax || undefined
+        }
+      }
+    }
+  });
+};
+
+window.renderBarChart = renderBarChart;
+window.renderHistogram = renderHistogram;
+window.renderLineChart = renderLineChart;
 
 })();

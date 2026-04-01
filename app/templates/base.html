@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="ADAPT-LD - Adaptive Learning Diagnostics System">
-  <title>ADAPT-LD | Adaptive Learning Diagnostics</title>
-  <link rel="icon" type="image/x-icon" href="/static/adapt-ld-logo.svg">
+  <title>ADAPT-LD</title>
+  <link rel="icon" type="image/x-icon" href="/static/logo.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/static/css/theme.css">
@@ -22,13 +22,13 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center gap-3">
-          <img src="/static/adapt-ld-logo.svg" alt="ADAPT-LD Logo" class="h-10 w-10">
-          <span class="text-xl font-bold text-slate-900">ADAPT-LD</span>
+          <img src="/static/adapt-ld-logo.svg" alt="ADAPT-LD Logo" class="h-10 w-30">
         </div>
         <div class="hidden md:flex items-center gap-6">
           <a href="/" class="text-slate-600 hover:text-slate-900 font-medium transition">Home</a>
           <a href="/dashboard" class="text-slate-600 hover:text-slate-900 font-medium transition">Dashboard</a>
           <a href="/test" class="text-slate-600 hover:text-slate-900 font-medium transition">Assessment</a>
+          <a href="/reports" class="text-slate-600 hover:text-slate-900 font-medium transition">Reports</a>
 
           <!-- Desktop Menu -->
         {% if user %}
@@ -47,25 +47,22 @@
             </div>
           </div>
         {% else %}
-          <div id="open-login"  class="relative">
-            <button @click="roleMenu=!roleMenu"
-                    class="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
-              Login
-            </button>
-          </div>
+          <button id="open-login" class="relative bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-700">
+            Login
+          </button>
         {% endif %}
         </div>
   </nav>
 
   <!-- Main Content -->
-  <main class="min-h-[calc(100vh-64px)]">
+  <main class="bg-blue-300 min-h-[calc(100vh-64px)]">
     {% block content %}{% endblock %}
   </main>
 
   <!-- Footer -->
   <footer class="bg-slate-100 border-t border-slate-200 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <p class="text-center text-slate-600 text-sm">&copy; 2026 ADAPT-LD. Adaptive Learning Diagnostics System.</p>
+      <p class="text-center text-slate-600 text-sm">&copy; 2026 Adaptive Learning Diagnostics System.</p>
     </div>
   </footer>
 </footer>

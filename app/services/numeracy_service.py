@@ -2,16 +2,6 @@ from typing import Dict, List
 
 
 def score_numeracy(data) -> Dict:
-    """Compute numeracy metrics from submitted data.
-
-    Expected `data` fields:
-      - answers: list of submitted numeric answers (floats/ints)
-      - correct: list of expected numeric answers (floats/ints) OR correctness flags (1/0)
-      - response_times: list of floats (seconds)
-
-    Returns a dictionary with accuracy, average response time, total, correct_count,
-    and a normalized `number_sense_score` (0-100).
-    """
     # Normalize inputs if dict-like
     if isinstance(data, dict):
         answers = data.get('answers', [])

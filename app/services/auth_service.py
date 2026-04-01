@@ -4,35 +4,30 @@ from typing import Optional
 from jose import jwt
 from app.core import security
 from jose import JWTError
-from fastapi import HTTPException, Request
+from fastapi import HTTPException, Request, Depends
 from starlette import status
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
+from app.core.database import User, get_db
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-# Demo in-memory user store. Replace with real user DB in production.
-_users = {
-    "demo@school.test": {
-        "email": "demo@school.test",
-        "full_name": "Demo User",
-        "hashed_password": pwd_context.hash("demo-pass"),
-        "disabled": False,
-    }
-}
-
+# Remove in-memory store, use DB instead
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 
-def get_user(email: str) -> Optional[dict]:
-    return _users.get(email)
+async def get_user(db: AsyncSession, email: str) -> Optional[User]:
+    result = await db.execute(select(User).where(User.email == email))
+    return result.scalars().first()
 
 
-def authenticate_user(email: str, password: str) -> Optional[dict]:
-    user = get_user(email)
+async def authenticate_user(db: AsyncSession, email: str, password: str) -> Optional[User]:
+    user = await get_user(db, email)
     if not user:
         return None
-    if not verify_password(password, user["hashed_password"]):
+    if not verify_password(password, user.password_hash):
         return None
     return user
 
@@ -56,7 +51,7 @@ def decode_access_token(token: str) -> Optional[dict]:
         return None
 
 
-def get_current_user(request: Request):
+async def get_current_user(request: Request, db: AsyncSession = Depends(get_db)):
     """FastAPI dependency to require authenticated user via HttpOnly cookie 'access_token'."""
     token = request.cookies.get("access_token")
     if not token:
@@ -84,7 +79,7 @@ def get_current_user(request: Request):
             raise HTTPException(status_code=status.HTTP_303_SEE_OTHER, headers={"Location": f"/?signin=1&next={next_path}"})
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token payload")
 
-    user = get_user(email)
+    user = await get_user(db, email)
     if not user:
         accept = request.headers.get("accept", "")
         if "text/html" in accept:
@@ -94,7 +89,7 @@ def get_current_user(request: Request):
     return user
 
 
-def get_current_user_optional(request: Request):
+async def get_current_user_optional(request: Request, db: AsyncSession = Depends(get_db)):
     """Return authenticated user if token present and valid, otherwise None.
 
     This helper can be used in routes that want to render templates even when
@@ -111,4 +106,4 @@ def get_current_user_optional(request: Request):
     email = payload.get("sub")
     if not email:
         return None
-    return get_user(email)
+    return await get_user(db, email)

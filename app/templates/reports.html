@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+{% block content %}
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+
+  <!-- Accuracy -->
+  <div class="bg-white p-6 rounded-2xl shadow">
+    <h2 class="text-gray-500">Accuracy</h2>
+    <p id="accuracy" class="text-3xl font-bold text-green-500">--%</p>
+  </div>
+
+  <!-- Avg Time -->
+  <div class="bg-white p-6 rounded-2xl shadow">
+    <h2 class="text-gray-500">Avg Time</h2>
+    <p id="avgTime" class="text-3xl font-bold text-blue-500">--</p>
+  </div>
+
+  <!-- Insight -->
+  <div class="bg-white p-6 rounded-2xl shadow">
+    <h2 class="text-gray-500">AI Insight</h2>
+    <p id="insightText" class="text-sm text-gray-700">Loading...</p>
+  </div>
+
+</div>
+
+<!-- Charts -->
+<canvas id="scoreChart"></canvas>
+<canvas id="timeChart" class="mt-6"></canvas>
+
+<!-- Difficulty Breakdown -->
+<div id="difficultyReport" class="mt-6"></div>
+{% endblock %}
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/static/js/reports.js"></script>
+<script src="/static/js/charts.js"></script>
+{% endblock %}
+
