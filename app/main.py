@@ -14,7 +14,7 @@ import random
 
 # Import routers
 from app.routes import pages, reading, analytics
-from app.api import math, attention, auth, reports, grammar_results
+from app.api import math, attention, auth, reports, grammar_results, ml_prediction
 
 # =========================
 # App Initialization
@@ -65,6 +65,7 @@ app.include_router(attention.router, prefix="/adapt-ld/attention", tags=["Attent
 app.include_router(grammar_results.router, prefix="/adapt-ld/grammar", tags=["Grammar"])
 app.include_router(auth.router, prefix="/adapt-ld/auth", tags=["Auth"])
 app.include_router(reports.router, prefix="/adapt-ld/reports", tags=["Reports"])
+app.include_router(ml_prediction.router, prefix="/adapt-ld/ml", tags=["ML Prediction"])
 
 # =========================
 # Health Check Route

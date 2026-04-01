@@ -6,7 +6,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from app.services.adapt_ld_report_generator import generate_adapt_ld_report
 from app.services.auth_service import get_current_user_optional
-from app.services.ml_bridge import get_student_ld_prediction
 from app.core.database import Test, Response, AttentionResult, Question, get_db
 
 router = APIRouter()

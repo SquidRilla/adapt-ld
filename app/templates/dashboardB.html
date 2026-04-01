@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-6 py-10 bg-blue-300" >
+
+<h1 class="text-3xl font-bold mb-8">Diagnostics Dashboard</h1>
+
+<div class="grid md:grid-cols-2 gap-8">
+
+<div class="bg-indigo-100 p-6 rounded-xl shadow">
+<canvas id="riskGauge"></canvas>
+</div>
+
+<div class="bg-indigo-100 p-6 rounded-xl shadow">
+<canvas id="performanceChart"></canvas>
+</div>
+
+</div>
+
+<div class="grid md:grid-cols-2 gap-8 mt-8">
+
+<div class="bg-indigo-100 p-6 rounded-xl shadow">
+<canvas id="radarChart"></canvas>
+</div>
+
+<div class="bg-indigo-100 p-6 rounded-xl shadow">
+<canvas id="testsChart"></canvas>
+</div>
+
+</div>
+
+<div class="bg-indigo-100 p-6 rounded-xl shadow mt-8">
+<canvas id="diagnosisChart"></canvas>
+</div>
+
+</div>
+{% endblock %}
+{% block scripts %}
+
+
+<script src="/static/js/charts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+new Chart(document.getElementById("performanceChart"), {
+type: "bar",
+data: {
+labels: ["Reading","Writing","Math","Attention"],
+datasets: [{
+label: "Student Score %",
+data: [82,65,74,70],
+borderWidth: 1
+}]
+},
+options: {
+responsive:true,
+scales:{
+y:{beginAtZero:true,max:100}
+}
+}
+});
+
+new Chart(document.getElementById("radarChart"), {
+type: "radar",
+data: {
+labels: [
+"Reading Speed",
+"Phonological Awareness",
+"Spelling",
+"Memory",
+"Attention"
+],
+datasets: [{
+label: "Diagnostic Score",
+data: [60,50,40,65,70]
+}]
+}
+});
+
+new Chart(document.getElementById("testsChart"), {
+type: "line",
+data: {
+labels:["Mon","Tue","Wed","Thu","Fri","Sat"],
+datasets:[{
+label:"Tests Completed",
+data:[12,19,8,15,22,18],
+tension:0.3
+}]
+}
+});
+
+new Chart(document.getElementById("diagnosisChart"), {
+type:"bar",
+data:{
+labels:[
+"Normal",
+"Dyslexia",
+"Dysgraphia",
+"Dyscalculia",
+"ADHD"
+],
+
+datasets:[{
+label:"Tests Completed",
+data:[45,15,10,12,8]
+}]
+}
+});
+
+new Chart(document.getElementById("riskGauge"), {
+type: "doughnut",
+data: {
+labels: ["Safe","At Risk"],
+datasets: [{
+data: [65,35]
+}]
+},
+options:{
+circumference:180,
+rotation:270
+}
+});
+</script>
+{% endblock %}

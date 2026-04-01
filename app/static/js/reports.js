@@ -95,6 +95,9 @@ async function loadReport() {
         }
 
         document.getElementById("difficultyReport").innerHTML = reportText;
+
+        // Load ML prediction
+        await loadMLPrediction();
     } catch (err) {
         console.error("Error loading report:", err);
         document.getElementById("accuracy").innerText = "Error";
@@ -103,3 +106,47 @@ async function loadReport() {
 }
 
 loadReport();
+
+async function loadMLPrediction() {
+  try {
+    const res = await fetch("/adapt-ld/ml/predict-summary");
+    if (!res.ok) {
+      console.warn("ML prediction not available:", res.status);
+      document.getElementById("riskLevel").innerText = "N/A";
+      document.getElementById("riskConfidence").innerText = "Confidence: Not available";
+      return;
+    }
+
+    const data = await res.json();
+    const pred = data.prediction;
+
+    // Display risk level with color coding
+    const riskLevelEl = document.getElementById("riskLevel");
+    const riskConfidenceEl = document.getElementById("riskConfidence");
+
+    const riskLabel = pred.risk_label || "Unknown";
+    const confidence = (pred.confidence * 100).toFixed(1);
+
+    riskLevelEl.innerText = riskLabel;
+
+    // Color code by risk level
+    if (pred.risk_level === 0) {
+      riskLevelEl.className = "text-3xl font-bold text-green-600";
+    } else if (pred.risk_level === 1) {
+      riskLevelEl.className = "text-3xl font-bold text-yellow-600";
+    } else if (pred.risk_level === 2) {
+      riskLevelEl.className = "text-3xl font-bold text-orange-600";
+    } else {
+      riskLevelEl.className = "text-3xl font-bold text-red-600";
+    }
+
+    riskConfidenceEl.innerText = `Confidence: ${confidence}%`;
+    riskConfidenceEl.innerHTML += `<br/><span class="text-xs text-gray-500 mt-1 block">${pred.interpretation}</span>`;
+
+    console.log("ML Prediction loaded:", pred);
+  } catch (err) {
+    console.error("Error loading ML prediction:", err);
+    document.getElementById("riskLevel").innerText = "Error";
+    document.getElementById("riskConfidence").innerText = "Could not load prediction";
+  }
+}
